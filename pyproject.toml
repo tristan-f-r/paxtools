@@ -1,7 +1,14 @@
 [project]
 name = "paxtools"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python wrapper for Paxtools."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+paxtools = "paxtools.cli:main"
