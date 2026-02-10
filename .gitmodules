@@ -1,0 +1,3 @@
+[submodule "paxtools/paxtools"]
+	path = paxtools/paxtools
+	url = https://github.com/BioPAX/Paxtools/
