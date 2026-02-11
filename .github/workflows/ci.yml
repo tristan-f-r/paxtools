@@ -15,6 +15,7 @@ jobs:
           java-version: 21
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: paxtools/paxtools/pom.xml
       - name: Build with Maven and JDK-21
         working-directory: paxtools/paxtools
         run: mvn --batch-mode --update-snapshots verify
