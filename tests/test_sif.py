@@ -44,9 +44,21 @@ def test_sif():
     )
 
     # TODO: also check for _expected_text_2 and _actual_text_2 later
-    expected_text_1, _expected_text_2 = (artifacts_directory / "Wnt_signaling_pathway_extended.sif").read_text('utf-8-sig').split("\n\n")
+    expected_text_1, _expected_text_2 = (
+        (artifacts_directory / "Wnt_signaling_pathway_extended.sif")
+        .read_text("utf-8-sig")
+        .split("\n\n")
+    )
     actual_text_1, _actual_text_2 = actual.read_text().split("\n\n")
 
-    expected = pandas.read_csv(StringIO(expected_text_1), sep='\t', usecols=["PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"])
-    actual = pandas.read_csv(StringIO(actual_text_1), sep='\t', usecols=["PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"])
+    expected = pandas.read_csv(
+        StringIO(expected_text_1),
+        sep="\t",
+        usecols=["PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"],
+    )
+    actual = pandas.read_csv(
+        StringIO(actual_text_1),
+        sep="\t",
+        usecols=["PARTICIPANT_A", "INTERACTION_TYPE", "PARTICIPANT_B"],
+    )
     pandas.testing.assert_frame_equal(expected, actual)
