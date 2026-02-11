@@ -1,5 +1,7 @@
 # PAXTools
 
+[![Version](https://img.shields.io/pypi/v/paxtools.svg)](https://pypi.python.org/pypi/paxtools/)
+
 Python wrapper for Paxtools. This requires Java to run, as this is a pip wrapper for a Java executable jar.
 
 _This currently is only a CLI wrapper. This only contains a python utility to convert BioPAX tools to SIF._
