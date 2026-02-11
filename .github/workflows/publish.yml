@@ -15,12 +15,12 @@ jobs:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v7
       - uses: actions/setup-java@v5
-        working-directory: paxtools/paxtools
         with:
           java-version: 21
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven and JDK-21
+        working-directory: paxtools/paxtools
         run: mvn --batch-mode --update-snapshots verify
       # mainly starting here:
       - name: Build a binary wheel and a source tarball
