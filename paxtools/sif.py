@@ -4,14 +4,13 @@ Converts BioPAX files to SIF files
 
 import os
 import subprocess
+from typing import IO, Any, Optional
 from paxtools.cli import run
+from paxtools.util import optional
 
 class SifConversionFailure(Exception):
     pass
 
-
-def optional(value: str, show: bool) -> list[str]:
-    return [value] if show else []
 
 def toSIF(
         biopax: str | os.PathLike, output_sif: str | os.PathLike,
@@ -20,7 +19,9 @@ def toSIF(
         seqDb: list[str] = [], chemDb: list[str] = [],
         mergeInteractions: bool = True, useNameIfNoId: bool = False,
         properyAccessors: list[str] = [],
-        andSif: bool = False):
+        andSif: bool = False,
+        denylist: Optional[str | os.PathLike] = None,
+        stdout: Optional[int | IO[Any]] = subprocess.DEVNULL):
     """
     Equivalent to `paxtools toSIF ...`. This documentation is paraphrased from the main paxtools CLI.
     @param biopax: The input BioPAX file
@@ -48,6 +49,12 @@ def toSIF(
         or custom biopax property path accessors (XPath-like expressions to apply to each mediator entity; 
         see https://github.com/BioPAX/Paxtools/wiki/PatternBinaryInteractionFramework)
     @param andSif: Also creates a `.sif` file adjacent to output. The author finds this parameter ridiculous, and recommends just calling this method twice.
+    @param denylist: The denylist to use. PathwayCommons usually provides some FTP-level `blacklist.txt` that can be used as this. See `tests/artifacts` for the denylist file we use.
+
+    If you want the behavior expressed in the PathwayCommons UI
+    (Implemented at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/service/BiopaxConverter.java#L210-L253),
+    use the settings `-useNameIfNoId chemDb=chebi seqDb=hgnc`,
+    or pythonically, `useNameIfNoId=True, chemDb=['chebi'], seqDb=['hgnc']`, along with specifying the PathwayCommons provided denylist.
     """
     process = run([
         'toSIF', str(biopax), str(output_sif),
@@ -58,9 +65,9 @@ def toSIF(
         *optional("-extended", extended),
         *optional("-andSif", andSif),
         *optional("-dontMergeInteractions", not mergeInteractions),
-        *optional("--useNameIfNoId", useNameIfNoId),
+        *optional("-useNameIfNoId", useNameIfNoId),
         *properyAccessors
-    ], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ], stdout=stdout, stderr=subprocess.PIPE, denylist=denylist)
 
     if process.returncode != 0:
         raise SifConversionFailure(f"Conversion errored with code {process.returncode}: {process.stderr.decode('utf-8')}")

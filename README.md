@@ -3,8 +3,13 @@
 Python wrapper for Paxtools. This requires Java to run, as this is a pip wrapper for a Java executable jar.
 
 _This currently is only a CLI wrapper. This only contains a python utility to convert BioPAX tools to SIF._
-_This satisfies my needs, though I may extend this in the future. If this turns out to be a false claim,_
-_feel free to email me and I'll gladly move the package name to the motivated individual!_
+_This satisfies my needs, though I may extend this in the future, and for some time I also plan to review and accept incoming PRs._
+_If this turns out to be a false claim, feel free to email me and I'll gladly move the package name to the motivated individual!_
+
+## CLI
+
+Running this package directly opens the `paxtools` jar, which requires Java.
+JVM arguments can be passed in with the universal environment variable `JDK_JAVA_OPTIONS`.
 
 ## Versioning
 
