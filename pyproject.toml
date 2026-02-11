@@ -5,6 +5,19 @@ description = "Python wrapper for Paxtools."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
+authors = ["Tristan F.-R <pub.tristanf@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/tristan-f-r/paxtools/"
+keywords = ['paxtools', 'cli']
+
+classifiers = [
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Java',
+        'Programming Language :: Java :: 21',
+]
 
 [build-system]
 requires = ["setuptools"]
