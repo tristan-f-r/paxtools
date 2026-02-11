@@ -1,0 +1,21 @@
+name: publish
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+      - uses: actions/setup-java@v5
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven and JDK-21
+        run: mvn --batch-mode --update-snapshots verify
+      - name: Run tests
+        run: uv run pytest
