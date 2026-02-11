@@ -61,9 +61,10 @@ def toSIF(
     If you want the behavior expressed in the PathwayCommons UI
     (Implemented at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/service/BiopaxConverter.java#L210-L253,
     where `options` is at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/web/ApiControllerV2.java#L54
-    and is usually empty unless specified by the request),
-    use the settings `chemDb=chebi seqDb=hgnc exclude=NEIGHBOR_OF`,
-    or pythonically, `chemDb=['chebi'], seqDb=['hgnc'], exclude=['NEIGHBOR_OF']`, along with specifying the PathwayCommons provided denylist.
+    and is usually empty unless specified by the request), I have not fully figured it out (some kind of isotype is changing in the file),
+    but the settings `chemDb=chebi seqDb=hgnc exclude=NEIGHBOR_OF`,
+    or pythonically, `chemDb=['chebi'], seqDb=['hgnc'], exclude=['NEIGHBOR_OF']`, along with specifying the PathwayCommons provided denylist,
+    preserve the interactions and their type.
     """
     process = run(
         [
