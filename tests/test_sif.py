@@ -12,10 +12,12 @@ def test_sif():
     denylist = artifacts_directory / 'pc2-14-denylist.txt'
     
     actual = output_directory / 'Wnt_signaling_pathway.sif'
-    toSIF(input_pathway, actual, useNameIfNoId=True, chemDb=['chebi'], seqDb=['hgnc'], denylist=denylist)
-    assert filecmp.cmp(artifacts_directory / 'Wnt_signaling_pathway.sif', actual, shallow=True)
+    # All the toSIF settings are to replicate PathwayCommons SIF generation as per the `toSIF` doccomment.
+    toSIF(input_pathway, actual, chemDb=['chebi'], seqDb=['hgnc'], denylist=denylist, exclude=['NEIGHBOR_OF'])
+    # We don't use filecmp as the downloaded files come with a BOM. We have to decode them first :/
+    assert Path(artifacts_directory / 'Wnt_signaling_pathway.sif').read_text('utf-8-sig') == actual.read_text()
 
     # The extended variant
     actual = output_directory / 'Wnt_signaling_pathway_extended.sif'
-    toSIF(input_pathway, actual, useNameIfNoId=True, chemDb=['chebi'], seqDb=['hgnc'], denylist=denylist)
-    assert filecmp.cmp(artifacts_directory / 'Wnt_signaling_pathway_extended.sif', actual, shallow=True)
+    toSIF(input_pathway, actual, chemDb=['chebi'], seqDb=['hgnc'], denylist=denylist, exclude=['NEIGHBOR_OF'], extended=True)
+    assert Path(artifacts_directory / 'Wnt_signaling_pathway_extended.sif').read_text('utf-8-sig') == actual.read_text()

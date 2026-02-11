@@ -11,7 +11,7 @@ from paxtools.util import optional
 class SifConversionFailure(Exception):
     pass
 
-
+# TODO: well-typed SIFEnum for include/exclude?
 def toSIF(
         biopax: str | os.PathLike, output_sif: str | os.PathLike,
         include: list[str] = [], exclude: list[str] = [],
@@ -27,9 +27,9 @@ def toSIF(
     @param biopax: The input BioPAX file
     @param output: The output file for the SIF-like text format
     @param include: List of relationship types to include
-        (mind using underscore instead of minus sign in the SIF type names; the default is to use all types).
+        (mind using underscore instead of minus sign in the SIF type names; the default is to include all types).
     @param exclude: List of relationship types to exclude
-        (mind using underscore instead of minus sign in the SIF type names; the default is to use all types).
+        (mind using underscore instead of minus sign in the SIF type names; the default is to exclude no types).
     @param mergeInteractions: Merges equivalent interactions
     @param seqDb: standard sequence/gene/chemical ID types to match xref.db values
     @param chemDb: standard sequence/gene/chemical ID types to match xref.db values
@@ -52,9 +52,11 @@ def toSIF(
     @param denylist: The denylist to use. PathwayCommons usually provides some FTP-level `blacklist.txt` that can be used as this. See `tests/artifacts` for the denylist file we use.
 
     If you want the behavior expressed in the PathwayCommons UI
-    (Implemented at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/service/BiopaxConverter.java#L210-L253),
-    use the settings `-useNameIfNoId chemDb=chebi seqDb=hgnc`,
-    or pythonically, `useNameIfNoId=True, chemDb=['chebi'], seqDb=['hgnc']`, along with specifying the PathwayCommons provided denylist.
+    (Implemented at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/service/BiopaxConverter.java#L210-L253,
+    where `options` is at https://github.com/PathwayCommons/cpath2/blob/47a5c0367b54317431c36a9a0e54a6ae22aaba0f/src/main/java/cpath/web/ApiControllerV2.java#L54
+    and is usually empty unless specified by the request),
+    use the settings `chemDb=chebi seqDb=hgnc exclude=NEIGHBOR_OF`,
+    or pythonically, `chemDb=['chebi'], seqDb=['hgnc'], exclude=['NEIGHBOR_OF']`, along with specifying the PathwayCommons provided denylist.
     """
     process = run([
         'toSIF', str(biopax), str(output_sif),
