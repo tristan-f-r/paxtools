@@ -1,6 +1,6 @@
 [project]
 name = "paxtools"
-version = "6.0.0-1"
+version = "6.0.0.1"
 description = "Python wrapper for Paxtools."
 readme = "README.md"
 requires-python = ">=3.13"

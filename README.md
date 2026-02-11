@@ -16,7 +16,7 @@ JVM arguments can be passed in with the universal environment variable `JDK_JAVA
 ## Versioning
 
 We care very little about breaking API changes in the actual API, since these largely are reflective
-of Paxtools changes. Instead, the version is `<paxtools-version>-<incremented-number>`.
+of Paxtools changes. Instead, the version is `<paxtools-version>.<incremented-number>`.
 
 ## Development
 
